@@ -1,3 +1,4 @@
+build | passing
 # Power-Meter
 Power Meter is a program developed to measure light intensity in experiments in undergraduate laboratories using an USB camera. The implementation of this program is described at (link to the article here).
 
