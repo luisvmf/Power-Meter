@@ -1,0 +1,690 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Language" content="pt-br">
+    <title>Power Meter</title>
+</head>
+<script type="text/javascript">
+const {dialog} = require('electron').remote;
+function selecionadiretorioarquivo(){
+var gigigigiui=dialog.showSaveDialog();
+if(gigigigiui+""!="undefined"){
+document.getElementById("hgf").value=gigigigiui;
+}
+}
+</script>
+
+
+<div style="position: absolute; width: 78px; height: 27px; z-index: 25; left: -1000px; top: 570px" id="camada14">
+	<font color="#FFFFFF">Posição</font></div>
+<img id="imagem-replace-camera" width="220" height="277" src="iconb.png" style="visibility:hidden">
+<script src="Aristochart.js" type="text/javascript"></script>
+<body onload="inicia();" bgcolor="#000000">
+    <video id="videoinicial" width="320" height="240" autoplay style="visibility:hidden">
+    </video>
+
+    <div style="position: absolute; width: 395px; height: 285px; z-index: 1; left:10px; top:30px" id="camada1">
+        <canvas id="video" width="320" height="240">
+        </canvas></div>
+
+    <div style="position: absolute; width: 235px; height: 45px; z-index: 4; left: -285px; top: 255px" id="cor"></div>
+
+    <div style="position: absolute; width: 530px; height: 310px; z-index: 5; left: 335px; top: 30px" id="camada3">
+        <canvas id="grafico" width="530px" height="240px"></canvas></div>
+
+    <div style="position: absolute; width: 120px; height: 240px; z-index: 9; left: 10px; top: 30px; border: 1px solid #0000FF" id="camada5">
+        &nbsp;</div>
+
+
+
+    <div style="position: absolute; width: 800px; height: 35px; z-index: 16; left: 5px; top: 270px" id="camada6">
+        <font color="#0000FF">xi:</font>
+        <font color="#FF0000"><input type="range" id="xi" value="120" min="120" max="320"> xf:
+            <input type="range" id="xf" min="120" max="320" value="320" name="T1" size="20"></font>
+        <font color="#0000FF">yi:</font>
+        <font color="#FF0000"><input type="range" id="yi" min="0" max="240" value="0" name="T2" size="20">yf:<input type="range" id="yf" min="0" max="240" value="240" name="T3" size="20"></font>
+    </div>
+
+
+
+    <div style="border-top:1px solid #FF0000; position: absolute; width: 200px; height: 15px; z-index: 11; left: 130px; top: 190px" id="marcadoryf">
+        &nbsp;</div>
+
+
+
+    <div style="border-left:1px solid #FF0000; position: absolute; width: 25px; height: 237px; z-index: 12; left: 10px; top: 30px" id="marcadorxf">
+        &nbsp;</div>
+    <div style="border-top:1px solid #0000FF; position: absolute; width: 200px; height: 15px; z-index: 13; left: 130px; top: 190px" id="marcadoryi">
+        &nbsp;</div>
+
+
+
+    <div style="border-left:1px solid #0000FF; position: absolute; width: 25px; height: 237px; z-index: 14; left: 10px; top: 30px" id="marcadorxi">
+        &nbsp;</div>
+
+
+
+    <div style="position: absolute; width: 895px; height: 25px; z-index: 17; left: 0px; top: 0px; background-color: #008000; -webkit-app-region: drag" id="camada7">
+        <font color="#FFFFFF" size="4">&nbsp;&nbsp; Power meter</font>
+    </div>
+
+
+
+    <div style="position: absolute; width: 20px; height: 25px; z-index: 19; left: 870px; top: 5px;-webkit-app-region: no-drag;" onclick="window.close()" id="camada11">
+        <font color="#FFFFFF">X</font>
+    </div>
+    <div style="position: absolute; width: 20px; height: 25px; z-index: 19; left: 835px; top: 0px;-webkit-app-region: no-drag;" onclick="require('electron').remote.getCurrentWindow().minimize()" id="camada10">
+        _</div>
+
+
+    <style type="text/css">
+        body {
+            overflow: hidden;
+            -webkit-user-select: none;
+        }
+        
+        input[type=range] {
+            -webkit-appearance: none;
+        }
+        
+        input[type=range]:focus {
+            outline: none;
+        }
+        
+        input[type=range]::-webkit-slider-runnable-track {
+            height: 8.4px;
+            cursor: pointer;
+            box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+            background: #005b00;
+            border-radius: 1.3px;
+            border: 0.2px solid #013201;
+        }
+        
+        input[type=range]::-webkit-slider-thumb {
+            box-shadow: 1px 1px 1px #00f100, 0px 0px 1px #0cff0c;
+            border: 1px solid #00a700;
+            height: 13px;
+            width: 14px;
+            border-radius: 5px;
+            background: rgba(0, 255, 0, 0.95);
+            cursor: pointer;
+            -webkit-appearance: none;
+            margin-top: -2.5px;
+        }
+        
+        input[type=range]:focus::-webkit-slider-runnable-track {
+            background: #007500;
+        }
+        
+        input[type=range]::-moz-range-track {
+            height: 8.4px;
+            cursor: pointer;
+            box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+            background: #005b00;
+            border-radius: 1.3px;
+            border: 0.2px solid #013201;
+        }
+        
+        input[type=range]::-moz-range-thumb {
+            box-shadow: 1px 1px 1px #00f100, 0px 0px 1px #0cff0c;
+            border: 1px solid #00a700;
+            height: 13px;
+            width: 14px border-radius: 5px;
+            background: rgba(0, 255, 0, 0.95);
+            cursor: pointer;
+        }
+        
+        input[type=range]::-ms-track {
+            cursor: pointer;
+            background: transparent;
+            border-color: transparent;
+            color: transparent;
+        }
+        
+        input[type=range]::-ms-fill-lower {
+            background: #004200;
+            border: 0.2px solid #013201;
+            border-radius: 2.6px;
+            box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+        }
+        
+        input[type=range]::-ms-fill-upper {
+            background: #005b00;
+            border: 0.2px solid #013201;
+            border-radius: 2.6px;
+            box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+        }
+        
+        input[type=range]::-ms-thumb {
+            box-shadow: 1px 1px 1px #00f100, 0px 0px 1px #0cff0c;
+            border: 1px solid #00a700;
+            border-radius: 5px;
+            background: rgba(0, 255, 0, 0.95);
+            cursor: pointer;
+            height: 8.4px;
+        }
+        
+        input[type=range]:focus::-ms-fill-lower {
+            background: #005b00;
+        }
+        
+        input[type=range]:focus::-ms-fill-upper {
+            background: #007500;
+        }
+    </style>
+    <div style="position: absolute; width: 300px; height: 100px; z-index: 20; left: -999px; top: 135px" id="gteytgvtgebytvgg">
+        <div class="select">
+            <label for="audioSource"></label><select id="audioSource"></select>
+        </div>
+    </div>
+    <div style="position: absolute; width: 160px; height: 25px; z-index: 20; left: 675px; top: 271px" id="seletorcamera">
+
+        <div class="select">
+            <label for="videoSource"></label>
+            <select id="videoSource" style="color: #FFFFFF; background-color: #000000"onchange="inicia()"></select>
+        </div>
+    </div>
+    <div style="position: absolute; width: 895px; height: 30px; z-index: 22; left: -5000px; top: 300px; background-color: #808080; opacity: 0.5;" id="gravando">
+        <div style="position: absolute; width: 400px; height: 40px; z-index: 23; left: 280px; top: -10px; opacity: 1" id="camada12">
+            <p align="center">
+                <font color="#FF0000" size="5">Gravando medidas, aguarde...</font>
+        </div>
+        <p>&nbsp;</div>
+    <div style="position: absolute; width: 115px; height: 35px; z-index: 24; left: 170px; top: 30px" id="camadaareamedida">
+		<font color="#0000FF">Medida</font></div>
+<div style="position: absolute; width: 115px; height: 35px; z-index: 24; left: 20px; top: 30px" id="camada13">
+	<font color="#0000FF">Referência</font></div>
+    <div style="position: absolute; width: 793px; height: 95px; z-index: 26; left: -1000px; top: 331px; border-top: 1px solid #FFFFFF" id="camada15">
+&nbsp;</div>
+<div style="position: absolute; width: 100px; height: 216px; z-index: 27; left: -1000px; top: 331px; border-right: 1px solid #FFFFFF" id="camada16">
+&nbsp;</div>
+    <div style="position: absolute; width: 319px; height: 11px; z-index: 28; left: 11px; top: 108px; border-top: 1px solid #00FF00" id="indicadorlocalvarreduraespacial">
+		<font size="1" color="#00FF00">Local varredura espacial</font></div>
+<div style="position: absolute; width: 410px; height: 19px; z-index: 29; left: 3px; top: 582px" id="camada17">
+        <font color="#FF0000">Posição y da varredura espacial<input type="range" id="seletorlocalvarreduraespacial" min="0" max="230" value="78" name="seletorlocalvarreduraespacial" size="20"></font></div>
+    <div style="position: absolute; width: 204px; height: 35px; z-index: 30; left: 719px; top: 282px" id="avisos">
+&nbsp;</div>
+    <script type="text/javascript" src="smoothie.js"></script>
+    <script type="text/javascript">
+var pixelssaturadosfinal=0;
+var async_function= function (yguyguyf,callback){
+process.nextTick(function(){
+callback(yguyguyf);
+});
+};
+var jgjugugcfyffyfyfyt=51;
+        var intensidadefinal = 0;
+        var audioSelect = document.querySelector('select#audioSource');
+        var videoSelect = document.querySelector('select#videoSource');
+
+        navigator.getUserMedia = navigator.getUserMedia ||
+            navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+        function gotSources(sourceInfos) {
+            for(var i = 0; i !== sourceInfos.length; ++i) {
+                var sourceInfo = sourceInfos[i];
+                var option = document.createElement('option');
+                option.value = sourceInfo.id;
+                if(sourceInfo.kind === 'audio') {
+                    option.text = sourceInfo.label || 'microphone ' +
+                        (audioSelect.length + 1);
+                    audioSelect.appendChild(option);
+                } else if(sourceInfo.kind === 'video') {
+                    option.text = sourceInfo.label || 'camera ' + (videoSelect.length + 1);
+                    videoSelect.appendChild(option);
+                } else {}
+            }
+            inicia();
+        }
+
+        if(typeof MediaStreamTrack === 'undefined' ||
+            typeof MediaStreamTrack.getSources === 'undefined') {} else {
+            MediaStreamTrack.getSources(gotSources);
+        }
+
+        function inicia() {
+            if(navigator.webkitGetUserMedia) {
+                var videoSource = videoSelect.value;
+
+                var camera = {
+                    video: {
+
+                        optional: [{
+                            sourceId: videoSource
+                        }]
+                    }
+                };
+                navigator.getUserMedia(camera, onSuccess, onFail);
+                criagrafico();
+if(videoSelect.value+""==""){
+
+}
+            } else {
+
+
+            }
+        }
+console.log("iuhui");
+        function onSuccess(stream) {
+            document.getElementById('videoinicial').src = webkitURL.createObjectURL(stream);
+        }
+
+        function onFail() {
+
+     
+        }
+
+        function desenhacanvas() {
+            var c = document.getElementById('video');
+            var v = document.getElementById('videoinicial');
+           c.getContext('2d').drawImage(v, 0, 0, 320, 240);
+
+
+
+            mostrapixel(15, 15);
+atualizavarreduraespacial();
+        setTimeout("desenhacanvas()", 50);
+
+        }
+        setTimeout("desenhacanvas()", 3000);
+        function mostrapixel(xpa, ypa) {
+            var canvas = document.getElementById('video');
+            var r = 0;
+            var g = 0;
+            var b = 0;
+            var x = 0;
+            var y = 0;
+            var numeropixels = 0;
+            var numeropixelsb = 0;
+            var valorintensidadefinal = 0;
+            r = 0;
+            g = 0;
+            b = 0;
+            document.getElementById("indicadorlocalvarreduraespacial").style.top = Number(document.getElementById("seletorlocalvarreduraespacial").value) + 30;
+            document.getElementById("marcadorxi").style.left = Number(document.getElementById("xi").value) + 10;
+            document.getElementById("camadaareamedida").style.left = Number(document.getElementById("xi").value) + 10;
+            document.getElementById("marcadorxf").style.left = Number(document.getElementById("xf").value) + 10;
+            document.getElementById("marcadoryi").style.top = Number(document.getElementById("yi").value) + 30;
+            document.getElementById("camadaareamedida").style.top = Number(document.getElementById("yi").value) + 30;
+            document.getElementById("marcadoryf").style.top = Number(document.getElementById("yf").value) + 30;
+            x = Number(document.getElementById("xi").value);
+            y = Number(document.getElementById("yi").value);
+       var fufyutfutyftuftf=0;
+	var gygyugfyfuftytytt=0;
+if((Number(document.getElementById("xf").value)-Number(document.getElementById("xi").value))+""=="0"){
+fufyutfutyftuftf=1;
+}else{
+fufyutfutyftuftf=0;
+}
+if((Number(document.getElementById("yf").value)-Number(document.getElementById("yi").value))+""=="0"){
+gygyugfyfuftytytt=1;
+}else{
+gygyugfyfuftytytt=0;
+}
+                    var dadoscanvas = canvas.getContext('2d').getImageData(Number(document.getElementById("xi").value), Number(document.getElementById("yi").value),(Number(document.getElementById("xf").value)-Number(document.getElementById("xi").value)+fufyutfutyftuftf), (Number(document.getElementById("yf").value)-Number(document.getElementById("yi").value)+gygyugfyfuftytytt)).data;
+
+var yhggyuytgfdytgdy=0;
+while(yhggyuytgfdytgdy<dadoscanvas.length){
+
+                    r = r + dadoscanvas[yhggyuytgfdytgdy+0];
+                    g = g + dadoscanvas[yhggyuytgfdytgdy+1];
+                    b = b + dadoscanvas[yhggyuytgfdytgdy+2];
+yhggyuytgfdytgdy=yhggyuytgfdytgdy+4;
+}
+r=r/yhggyuytgfdytgdy;
+g=g/yhggyuytgfdytgdy;
+b=b/yhggyuytgfdytgdy;
+
+
+            var rant = r;
+            var bant = b;
+            var gant = g;
+            r = 0;
+            g = 0;
+            b = 0;
+            x = 0;
+            y = 0;
+           
+                    var dadoscanvas = canvas.getContext('2d').getImageData(0, 0, 120, 240).data;
+var guiuiuiuiyguygui=0;
+
+while(guiuiuiuiyguygui<dadoscanvas.length){
+                    r = r + dadoscanvas[guiuiuiuiyguygui+0];
+                    g = g + dadoscanvas[guiuiuiuiyguygui+1];
+                    b = b + dadoscanvas[guiuiuiuiyguygui+2];
+guiuiuiuiyguygui=guiuiuiuiyguygui+4;
+}
+r=r/guiuiuiuiyguygui;
+g=g/guiuiuiuiyguygui;
+b=b/guiuiuiuiyguygui;
+
+
+                    if(Number(document.getElementById("yf").value) < Number(document.getElementById("yi").value)) {
+                        r = "nam";
+                        g = "nam";
+                        b = "nam";
+                    }
+  if(Number(document.getElementById("xf").value) < Number(document.getElementById("xi").value)) {
+                        r = "nam";
+                        g = "nam";
+                        b = "nam";
+                    }
+         
+
+
+
+            var rm = 0;
+            var bm = 0;
+            var gm = 0;
+            rm =  (r );
+            gm =  (g );
+            bm =  (b );
+            r = (rant );
+            b = (bant );
+            g = (gant );
+            valorintensidadefinal = ((r + g + b)/3)*(50/((rm+gm+bm)/3));
+if(valorintensidadefinal>200){
+pixelssaturadosfinal=1;
+}else{
+pixelssaturadosfinal=0;
+}
+            document.getElementById("camada2").innerHTML = "</font></p><p><font color='#008000' size='5'>" + (Math.round(valorintensidadefinal * 10) / 10) + "</font></p>";
+            intensidadefinal = valorintensidadefinal;
+            desenhagrafico(valorintensidadefinal);
+        }
+        var intensidadeultimamedidagravacao = 0;
+
+        function desenhagrafico(intensidade) {
+            intensidadeultimamedidagravacao = intensidade;
+            document.getElementById("camada2").style.top = -((240 / 255) * intensidade) + 240;
+            realizagravacao();
+
+        }
+        var valor = new TimeSeries();
+        setInterval(function() {
+            valor.append(new Date().getTime(), intensidadefinal);
+        }, 50);
+
+        function criagrafico() {
+            var chart = new SmoothieChart({
+                millisPerPixel: 17,
+                interpolation: 'linear',
+                timestampFormatter: SmoothieChart.timeFormatter,
+                maxValue: 255,
+                minValue: 0
+            });
+            chart.addTimeSeries(valor, {
+                strokeStyle: 'rgba(0, 255, 0, 1)',
+                fillStyle: 'rgba(0, 255, 0, 0.2)',
+                lineWidth: 1
+            });
+            chart.streamTo(document.getElementById("grafico"), 500);
+        }
+        var fs = require("fs");
+        var gravando = "0";
+        var contadorgravacaomedida = 0;
+        var arraymedidas = [];
+        var medidasfinal = "";
+        var tempoanterior = 0;
+        var contadortemporariogravacao = 0;
+        var tempoinicial = 0;
+        var numeromedidas = document.getElementById("numeromedidas").value;
+        var tempomedida = document.getElementById("tempomedida").value;
+        var primeiragravacao = "0";
+
+        function realizagravacao() {
+            if(primeiragravacao == "1") {
+                tempoanterior = (new Date()).getTime();
+                primeiragravacao = "0";
+            }
+            if(gravando == "1") {
+                numeromedidas = document.getElementById("numeromedidas").value;
+                tempomedida = document.getElementById("tempomedida").value;
+
+                if(contadorgravacaomedida < numeromedidas) {
+                    if((-tempoanterior + (new Date()).getTime()) > tempomedida) {
+                        tempoanterior = (new Date()).getTime();
+                        arraymedidas[contadorgravacaomedida] = "" + (-tempoinicial + (new Date()).getTime()) + "	" + intensidadeultimamedidagravacao;
+                        contadorgravacaomedida = contadorgravacaomedida + 1;
+                        document.getElementById("medidassalvas").innerHTML = "<p><font color='#FF0000'>Numero de medidas salvas:" + contadorgravacaomedida + "</font></p>";
+                    }
+                } else {
+                    while(contadortemporariogravacao < numeromedidas) {
+                        medidasfinal = medidasfinal + arraymedidas[contadortemporariogravacao] + "\r\n";
+                        contadortemporariogravacao = contadortemporariogravacao + 1;
+                    }
+                    if(document.getElementById("hgf").value + "" != "") {
+                        fs.appendFile("" + document.getElementById("hgf").value + "", "" + medidasfinal + "", (err) => {
+                            if(err) throw err;
+                        });
+                    } else {
+                        alert("Erro.");
+                    }
+                    gravando = 0;
+                    document.getElementById("gravando").style.left = -5000;
+                    alert("Medidas gravadas!");
+                    document.getElementById("medidassalvas").innerHTML = "";
+                }
+            } else {
+                medidasfinal = "";
+                contadortemporariogravacao = 0;
+                contadorgravacaomedida = 0;
+            }
+        }
+
+        function salvamedida() {
+            var parametrosgravacaook = "0";
+            if("" + document.getElementById("numeromedidas").value != "") {
+                if(Number(document.getElementById("numeromedidas").value) > 0) {
+                    if("" + document.getElementById("hgf").value != "") {
+                        if("" + document.getElementById("tempomedida").value != "") {
+                            if(Number(document.getElementById("tempomedida").value) > 50) {
+
+                                parametrosgravacaook = "1";
+                                document.getElementById("gravando").style.left = 5;
+                                gravando = "1";
+                                primeiragravacao = "1";
+                                tempoinicial = (new Date()).getTime();
+                            }
+                        }
+                    }
+                }
+            }
+            if(parametrosgravacaook + "" != "1") {
+                alert("Erro. O arquivo a ser gravado deve ser selecionado e o número de medidas e o intervalo entre as medidas devem ser especificados.\r\n O tempo da medida deve ser maior que 50ms.");
+            }
+            parametrosgravacaook = "0";
+        }
+
+var dadosgraficovarreduraespacial=[];
+dadosgraficovarreduraespacial[15]=0;
+dadosgraficovarreduraespacial[16]=0.1;
+dadosgraficovarreduraespacial[17]=0;
+
+
+
+
+function atualizavarreduraespacial(){
+
+jgjugugcfyffyfyfyt=jgjugugcfyffyfyfyt+1;
+
+if(jgjugugcfyffyfyfyt>10){
+jgjugugcfyffyfyfyt=0;
+async_function(1, function(ygyyty) {
+var canvas = document.getElementById('video');
+var contador=15;
+dadosgraficovarreduraespacial=[]
+while(contador<320){
+var dadoscanvas = canvas.getContext('2d').getImageData(contador, Number(document.getElementById("seletorlocalvarreduraespacial").value), 3, 9).data;
+dadosgraficovarreduraespacial[contador]=dadoscanvas[0]+dadoscanvas[1]+dadoscanvas[2];   
+contador=contador+3;
+}
+desenhagraficob(100);
+var npixelsaturados=0;
+
+var uigyugyuufffugr=canvas.getContext('2d').getImageData(0,0, 320, 240).data;
+
+var contadorvarreduraimagemy=0;
+
+while(contadorvarreduraimagemy<uigyugyuufffugr.length){
+
+if(uigyugyuufffugr[contadorvarreduraimagemy+0]>253){npixelsaturados=npixelsaturados+1;}
+if(uigyugyuufffugr[contadorvarreduraimagemy+1]>253){npixelsaturados=npixelsaturados+1;}
+if(uigyugyuufffugr[contadorvarreduraimagemy+2]>253){npixelsaturados=npixelsaturados+1;}
+contadorvarreduraimagemy=contadorvarreduraimagemy+4;
+}
+
+contadorvarreduraimagemy=0;
+
+console.log("pixels saturados"+npixelsaturados+","+pixelssaturadosfinal);
+if(Number(npixelsaturados)>85){
+if(pixelssaturadosfinal<1){
+document.getElementById("avisos").innerHTML="<p><font color='#FF0000'>Atenção! Pixels saturados.</font></p>";
+}
+if(pixelssaturadosfinal>0){
+document.getElementById("avisos").innerHTML="<p><font color='#FF0000'>Atenção! Pixels saturados.Intensidade insuficiente na área de referência.</font></p>";
+}
+}if(Number(npixelsaturados)<86){
+if(pixelssaturadosfinal<1){
+document.getElementById("avisos").innerHTML="";
+}
+if(pixelssaturadosfinal>0){
+document.getElementById("avisos").innerHTML="<p><font color='#FF0000'>Atenção! Intensidade insuficiente na área de referência.</font></p>";
+}
+}
+});
+}
+}
+
+
+function desenhagraficob(valormaximox){
+document.getElementById("camada14").style.left="408px";
+document.getElementById("camada15").style.left="58px";
+document.getElementById("camada16").style.left="751px";
+var graph = new Aristochart(document.getElementById("graficob"), {
+width: 890,
+  height: 315,
+   margin: 70,
+  padding: 20,
+	data:{
+		x: valormaximox,
+		y: dadosgraficovarreduraespacial
+},
+
+title: {
+    index: 6,
+    render: Aristochart.title.text,
+    x: "",
+    y: ""
+  },
+style:{
+default: {
+point: {
+ visible: false
+ },
+line: { 
+        stroke: "rgba(0, 255, 0, 1)",
+        width: 1,
+        fill: "rgba(0, 255, 0, 0.15)",
+        visible: true
+      },
+axis: { 
+        stroke: "#ddd",
+        width: 1,
+        visible: true,
+
+        x: {
+          visible: true,
+
+          fixed: true 
+        },
+
+        y: {
+          visible: true,
+          fixed: true
+        }
+      },
+tick: {
+        align: "middle",
+        stroke: "#ddd",
+        width: 1,
+        visible: true,
+
+        x: {
+          fixed: true
+        },
+
+        y: {
+          fixed: true
+        }
+      },
+ label: {
+        x: {
+          font: "Helvetica",
+          fontSize: 14,
+          fontStyle: "normal",
+          color: "rgb(255, 255, 255)",
+          align: "center",
+          baseline: "bottom",
+          offsetY: 15,
+          offsetX: 3,
+          visible: true,
+          fixed: true
+        },
+
+        y: {
+          font: "Helvetica",
+          fontSize: 10,
+          fontStyle: "normal",
+          color: "rgb(255, 255, 255)",
+          align: "center",
+          baseline: "bottom",
+          offsetY: 8,
+          offsetX: 8,
+          visible: true,
+          fixed: true
+        }
+      }
+
+}
+
+}
+
+});
+}
+
+
+    </script>
+
+    <div style="position: absolute; width: 65px; height: 75px; z-index: 15; left: 810px; top: 195px" id="camada2">
+        &nbsp;</div>
+    <div style="position: absolute; width: 25px; height: 20px; z-index: 18; left: 860px; top: 0px; border-style: ridge; border-width: 1px; padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px; background-color: #FF0000;-webkit-app-region: no-drag;" onclick="window.close()" id="camada9">
+        <p align="center">&nbsp;</div>
+    <div style="position: absolute; width: 25px; height: 20px; z-index: 18; left: 830px; top: 0px; border-style: ridge; border-width: 1px; padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px; background-color: #C0C0C0;-webkit-app-region: no-drag;" onclick="" id="camada8">
+        &nbsp;</div>
+
+    <div style="position: absolute; width: 925px; height: 95px; z-index: 21; left: 10px; top: 285px" id="gfdgdfdf">
+        <p>
+            <font color="#FFFFFF">n
+                <font face="Times New Roman">° medidas:
+                </font>
+            </font><input type="text" id="numeromedidas" size="8" style="color: #FFFFFF; background-color: #000000">
+            <font color="#FFFFFF">Intervalo entre as medidas:</font><input type="text" id="tempomedida" size="8" style="color: #FFFFFF; background-color: #000000"><font color="#FFFFFF">ms</font>
+            <font color="#FFFFFF">Local:</font>&nbsp;
+            <input type="text" size="9" style="color: #FFFFFF; background-color: #000000" name="hgf" id="hgf" onclick="selecionadiretorioarquivo()" />
+
+            <input type="button" name="T7" size="8" style="color: #FFFFFF; background-color: #000000" value="Mede" onclick="salvamedida()"></p>
+        <p>&nbsp;</div>
+
+    <div style="position: absolute; width: 890px; height: 15px; z-index: 23; left: 10px; top: 315px" id="medidassalvas">
+        &nbsp;</div>
+
+<div style="position: absolute; width: 890px; height: 137px; z-index: 0; left: 10px; top: 280px" id="varredura-espacial">
+        	
+<canvas id="graficob" style="position: absolute; width: 890px; height: 315px; z-index: 24" ></canvas>
+</div>
+
+
+</body>
+
+</html>

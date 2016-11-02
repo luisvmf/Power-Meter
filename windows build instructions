@@ -1,0 +1,8 @@
+1)Download nodejs v4.4.2 and run the command "nodejs.exe package.js" in the resources folder.
+
+2)Build with CodeBlocks the project in the windows-bin-code folder and copy the resulting exe file to same folder were this file is.
+
+3)Download Electron from here:
+http://powermeter.luisvmf.com/electron-w32.zip (for 32bit powermeter version)
+http://powermeter.luisvmf.com/electron-w64.zip (for 64bit powermeter version)
+and unzip the files at runtime folder.
