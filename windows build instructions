@@ -3,6 +3,6 @@
 2)Build with CodeBlocks the project in the windows-bin-code folder and copy the resulting exe file to same folder were this file is.
 
 3)Download Electron from here:
-http://powermeter.luisvmf.com/electron-w32.zip (for 32bit powermeter version)
-http://powermeter.luisvmf.com/electron-w64.zip (for 64bit powermeter version)
+https://github.com/luisvmf/Electron-clone/releases/download/1.0.0/electron-w32.zip (for 32bit powermeter version)
+https://github.com/luisvmf/Electron-clone/releases/download/1.0.0/electron-w64.zip (for 64bit powermeter version)
 and unzip the files at runtime folder.

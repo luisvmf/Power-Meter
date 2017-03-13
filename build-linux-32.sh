@@ -15,7 +15,7 @@ chmod u+rwx create-shortcut.sh
 ./create-shortcut.sh
 cd runtime
 #download the runtime
-wget "http://powermeter.luisvmf.com/electron-l32.zip"
+wget "https://github.com/luisvmf/Electron-clone/releases/download/1.0.0/electron-l32.zip"
 #-----------------------------------------------------------
 unzip electron-l32.zip
 rm electron-l32.zip
