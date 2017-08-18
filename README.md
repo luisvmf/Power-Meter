@@ -5,7 +5,7 @@ Home page: <a href="https://powermeter.luisvmf.com" target="_blank">powermeter.l
 
 Power Meter is a program developed to measure light intensity in experiments in undergraduate laboratories using an USB camera. The implementation of this program is described at (link to the article here).
 
- <p><img border="0" src="https://res.luisvmf.com/screenshot.png" width="90%"></p>
+ <p><img border="0" src="https://res.luisvmf.com/powermeterluisvmfcom/screenshot.png" width="90%"></p>
  
 To download the program go to <a href="https://powermeter.luisvmf.com" target="_blank">powermeter.luisvmf.com</a>. Use the instructions below only if you want to build from source.
   
