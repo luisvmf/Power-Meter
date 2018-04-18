@@ -1,7 +1,7 @@
 const {app, BrowserWindow} = require('electron')
 let win
 function createWindow () {
-  win = new BrowserWindow({show:false,width: 901, height: 605,minWidth: 901, minHeight: 605,maxWidth: 901, maxHeight: 605, frame:false, icon: `${__dirname}/icon.png`})
+  win = new BrowserWindow({show:false,width: 901, height: 545,minWidth: 901, minHeight: 545,maxWidth: 901, maxHeight: 545, frame:false, resizable:false, icon: `${__dirname}/icon.png`})
 win.loadURL(`file://${__dirname}/index.html`)
 win.once('ready-to-show', () => {
   win.show()

@@ -1,5 +1,4 @@
-www.digiprove.com/show_certificate.aspx?id=P785791
-Digital Fingerprint: 6F86853959D67185F1944FFA7514C15C19DC4F147EE9E593ACBF8F077E9DA5CD
+
 Download the original file at:https://github.com/luisvmf/Power-Meter
 MIT License
 
