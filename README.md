@@ -3,7 +3,7 @@
 
 Home page: <a href="https://powermeter.luisvmf.com" target="_blank">powermeter.luisvmf.com</a>
 
-Power Meter is a program developed to measure light intensity in experiments in undergraduate laboratories using an USB camera. The implementation of this program is described at (link to the article here).
+Power Meter is a program developed to measure light intensity in experiments in undergraduate laboratories using an USB camera. The implementation of this program is described at <a href="https://periodicos.ufsc.br/index.php/fisica/article/view/2175-7941.2017v34n2p636" target="_blank">here</a>
 
  <p><img border="0" src="https://res.luisvmf.com/powermeterluisvmfcom/screenshot.png" width="90%"></p>
  
