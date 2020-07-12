@@ -2,6 +2,8 @@
 ![alt tag](https://img.shields.io/badge/build-passing-brightgreen.svg)
 
 Home page: <a href="https://powermeter.luisvmf.com" target="_blank">powermeter.luisvmf.com</a>
+Get Source:
+  git clone https://github.com/luisvmf/Power-Meter
 
 Power Meter is a program developed to measure light intensity in experiments in undergraduate laboratories using an USB camera. The implementation of this program is described at <a href="https://periodicos.ufsc.br/index.php/fisica/article/view/2175-7941.2017v34n2p636" target="_blank">here</a>
 
